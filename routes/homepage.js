@@ -20,7 +20,7 @@ function getUserFromSession(session) {
           if (user) {
             resolve(user);
         } else {
-            res.redirect('/login');
+          reject(new Error('User not authenticated'));
         }
 });
 }
