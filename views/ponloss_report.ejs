@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/ponloss_report.css">
+</head>
+
+<body>
+  
+  
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/homepage"><img src="/logo.png" class="rounded mx-auto d-block" alt="..."></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/homepage">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/user_search">Search Users</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Trunk Report
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/trunkreport">Trunk Form</a></li>
+              <li><a class="dropdown-item" href="/showtable">Trunk Table</a></li>
+              <li><a class="dropdown-item" href="/update_trunktable">Update Trunk Table</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              PON LOSS
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/ponloss_report">PonLoss Form</a></li>
+              <li><a class="dropdown-item" href="/ponloss_table">PonLoss Table</a></li>
+              <li><a class="dropdown-item" href="/update_ponlosstable">Update PonLoss Table</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/import">Import</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Users
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#"> <%= user.username %> </a></li>
+              <li><a class="dropdown-item" href="/signup">SignUp</a></li>
+              <li><a class="dropdown-item" href="/logout">LogOut</a></li>
+            </ul>
+          </li>        
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <!--<div id="title">
+    <h1>Report</h1>
+ </div> -->
+
+ <% if (message) { %>
+  <div class="alert-box">
+   <div  class="alert alert-success" role="alert">
+    <%= message %>
+  </div>
+  </div>
+<% } %>
+
+
+  <div class="cg-form px-4 py-3 mx-auto mt-5">
+
+    <form id="inputForm" method="POST" action="/ponloss_report/submitted" class="needs-validation" novalidate>
+
+      <div class="row pb-1 g-3">
+
+        <div class=" col-md-4">
+          <label class="form-label" for="Ticket_no">Ticket No</label>
+          <input class="form-control" type="text" id="Ticket_no" name="Ticket_no">
+
+        </div>
+        <div class=" col-md-4">
+          <label class="form-label" for="odn">ODN</label>
+          <input class="form-control" type="text" id="odn" name="odn">
+        </div>
+
+        <div class=" col-md-4">
+          <label class="form-label" for="details">Details</label>
+          <input class="form-control" type="text" id="details" name="details"">
+        </div>
+      </div>
+
+      <div class="row pb-4 g-3">
+
+      </div>
+
+      <div class="row pb-4 g-3">
+        <div class=" col-md-4">
+          <label class="form-label" for="category">Category</label>
+          <input class="form-control" type="text" id="category" name="category">
+        </div>
+        <div class=" col-md-4">
+          <label class="form-label" for="issue_occured_in_ams">Issue Occurred</label>
+          <input class="form-control" type="datetime-local" id="issue_occured_in_ams" name="issue_occured_in_ams">
+        </div>
+      </div>
+
+
+      <div class="row pb-4 g-3">
+        
+        <div class=" col-md-4">
+          <label class="form-label" for="issue_escalated_in_ms">Issue Escalated to MS</label>
+          <input class="form-control" type="datetime-local" id="issue_escalated_in_ms" name="issue_escalated_in_ms">
+        </div>
+      
+      <div class=" col-md-4">
+        <label class="form-label" for="customer_impacted">Customer Impacted</label>
+        <input class="form-control" type="text" id="customer_impacted" name="customer_impacted">
+      </div>
+    </div>
+
+      <div class="row pb-4 g-3">
+
+        <div class=" col-md-4">
+          <label class="form-label" for="issue_resolve_in_system">Issue Resolved by otech</label>
+          <input class="form-control" type="datetime-local" id="issue_resolve_in_system" name="issue_resolve_in_system">
+        </div>
+
+        <div class=" col-md-4">
+          <label class="form-label" for="reason_for_outage">"Reason for Outage</label>
+          <input class="form-control" type="text" id="reason_for_outage" name="reason_for_outage">
+        </div>
+
+      </div>
+
+              
+      <button class="button" type="submit">Submit</button>
+
+    </form>
+  </div>
+
+
+<!-- Add the following scripts at the end of the body tag -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+</html>

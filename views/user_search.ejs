@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Search</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/user_search.css">
+
+
+</head>
+
+<body>
+
+    
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/homepage"><img src="/logo.png" class="rounded mx-auto d-block" alt="..."></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/homepage">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/user_search">Search Users</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Trunk Report
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/trunkreport">Trunk Form</a></li>
+              <li><a class="dropdown-item" href="/showtable">Trunk Table</a></li>
+              <li><a class="dropdown-item" href="/update_trunktable">Update Trunk Table</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              PON LOSS
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/ponloss_report">PonLoss Form</a></li>
+              <li><a class="dropdown-item" href="/ponloss_table">PonLoss Table</a></li>
+              <li><a class="dropdown-item" href="/update_ponlosstable">Update PonLoss Table</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/import">Import</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Users
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#"> <%= user.username %> </a></li>
+              <li><a class="dropdown-item" href="/signup">SignUp</a></li>
+              <li><a class="dropdown-item" href="/logout">LogOut</a></li>
+            </ul>
+          </li>        
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 ">
+        <form action="/user_search/search" method="GET">
+
+          <select class="form-control m-4  shadow bg-body rounded" id="Geography" name="Geography">
+            <option value="">Select Geography</option>
+            <option value="Outside Valley">Outside Valley</option>
+            <option value="Inside Valley">Inside Valley</option>
+          </select>
+
+
+
+          <input type="search" class="form-control m-4 shadow bg-body rounded" id="POP" name="POP"
+            placeholder="Search POP" autofocus required>
+
+
+
+          <input type="search" class="form-control m-4 shadow bg-body rounded" id="PON" name="PON"
+            placeholder="Search PON (For multiple PON in IV, search as: x/x/x-y/y/y & so on)">
+
+          <div class="button">
+            <button type="submit" class="button-56" value="Search">
+              Search
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="result" class="m-4">
+
+    <!-- Display Inside Valley results -->
+    <div id="iv_result">
+
+      <% if (typeof iv_result !=='undefined' && iv_result.length > 0) { %>
+
+        <div class="title">
+          <h4 class="mt-4" style="text-align: center;
+          background-color: beige;
+          padding: 12px 0;"> 
+            Inside Valley result of <span style="color: #d10069e5;"><%= POP %> </span> ||<span style="color: #d10069e5;"><%= PON %></span>
+          </h4>
+        </div>
+      <div class="table-heading">
+
+        <div class="total">
+          <h6>Total results: <span style="color: #d10069e5;"> <%= iv_resultl %></span></h6>
+        </div>
+        <div class="export">
+          <form action="/user_search/export" method="GET">
+            <input type="hidden" name="Geography" value="<%= Geography %>">
+            <input type="hidden" name="fileName" value="<%= fileName %>">
+            <button class="button-55" type="submit">Export</button>
+          </form>
+        </div>
+
+      </div>
+
+
+      <div id="pagination-iv" class="pagination-container">
+      </div>
+
+      <div class="table p--24">
+
+        <table id="myTable" class="table table-hover align-middle mt-3">
+
+          <!-- Table header -->
+          <thead>
+            <tr>
+              <th style="color: #d10069e5;">Object Name</th>
+              <th style="color: #d10069e5;">PON</th>
+              <th style="color: #d10069e5;">Username</th>
+              <th style="color: #d10069e5;">Customer Name</th>
+              <th style="color: #d10069e5;">Phone</th>
+              <th style="color: #d10069e5;">Latitude</th>
+              <th style="color: #d10069e5;">Longitude</th>
+              <th style="color: #d10069e5;">Address</th>
+              <th style="color: #d10069e5;" onclick="sortTable(8, 'myTable')">Status</th>
+              <th style="color: #d10069e5;">CDB No.</th>
+            </tr>
+          </thead>
+          <!-- Table body -->
+          <tbody>
+            <% for (var i=0; i < iv_result.length; i++) { %>
+            <tr class="iv-row">
+              <td>
+                <%= iv_result[i]['Object Name'] %>
+              </td>
+              <td>
+                <%= iv_result[i]['PON'] %>
+              </td>
+              <td>
+                <%= iv_result[i]['Username'] %>
+              </td>
+              <td>
+                <%= iv_result[i]['Customer Name'] %>
+              </td>
+              <td>
+                <%= iv_result[i]['Phone'] %>
+              </td>
+              <td>
+                <%= iv_result[i]['Latitude'] %>
+              </td>
+              <td>
+                <%= iv_result[i]['Longitude'] %>
+              </td>
+              <td>
+                <%= iv_result[i]['Address'] %>
+              </td>
+              <td>
+                <%= iv_result[i]['Status'] %>
+              </td>
+              <td>
+                <%= iv_result[i]['CDB No.'] %>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <% } else if (typeof iv_result !=='undefined' && ov_result === 'defined') { %>
+      <h3 class="mt-4">No results found for Inside Valley.</h3>
+      <% } %>
+    </div>
+     <!--Display Outside Valley Result-->
+    <div id="ov_result">
+
+      <% if (typeof ov_result !=='undefined' && ov_result.length> 0) { %>
+        
+        <!-- Display table with defined rows per page -->
+        <div class="title">
+          <h4 class="mt-4" style="text-align: center;
+          background-color: beige;
+          padding: 12px 0;"> 
+            Outside Valley result of <span style="color: #d10069e5;"><%= POP %> </span> ||<span style="color: #d10069e5;"><%= PON %></span>
+          </h4>
+        </div>
+      <div class="table-heading">
+
+        <div class="total">
+          <h6>Total results: <span style="color: #d10069e5;"> <%= iv_resultl %></span></h6>
+        </div>
+        <div class="export">
+          <form action="/user_search/export" method="GET">
+            <input type="hidden" name="Geography" value="<%= Geography %>">
+            <input type="hidden" name="fileName" value="<%= fileName %>">
+            <button class="button-55" type="submit">Export</button>
+          </form>
+        </div>
+
+
+      </div>
+
+          <div id="pagination-ov" class="pagination-container"></div>
+        
+        <table id="myTable1" class="table table-hover align-middle mt-3">
+
+          <!-- Table header -->
+          <thead>
+            <tr>
+              <th style="color: #d10069e5;">Device Name</th>
+              <th style="color: #d10069e5;">Username</th>
+              <th style="color: #d10069e5;">Customer Name</th>
+              <th style="color: #d10069e5;">Phone</th>
+              <th style="color: #d10069e5;">Slot, Pon</th>
+              <th style="color: #d10069e5;">Address</th>
+              <th style="color: #d10069e5;" onclick="sortTable(9, 'myTable1')">Status</th>
+              <th style="color: #d10069e5;">CDB No.</th>
+            </tr>
+          </thead>
+          <!-- Table body -->
+          <tbody>
+            <% for (var i=0; i < ov_result.length; i++) { %>
+              <tr class="ov-row">
+
+                <td>
+                  <%= ov_result[i]['Device Name'] %>
+                </td>
+                
+                <td>
+                  <%= ov_result[i]['Username'] %>
+                </td>
+                <td>
+                  <%= ov_result[i]['Customer Name'] %>
+                </td>
+                <td>
+                  <%= ov_result[i]['Phone'] %>
+                </td>
+                <td>
+                  <%= ov_result[i]['Slot, Pon'] %>
+                </td>
+                <td>
+                  <%= ov_result[i]['Address'] %>
+                </td>
+                <td>
+                  <%= ov_result[i]['Status'] %>
+                </td>
+                <td>
+                  <%= ov_result[i]['CDB No.'] %>
+                </td>
+              </tr>
+              <% } %>
+          </tbody>
+        </table>
+
+
+
+        <% } else if (typeof ov_result !=='undefined' && iv_result === 'defined' ) { %>
+          <h3>No results found for Outside Valley.</h3>
+          <% } %>
+    </div>
+
+
+
+
+  </div>
+
+
+
+  <!-- Add the following scripts at the end of the body tag -->
+  <script src="/user_searh.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+
+</html>

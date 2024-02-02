@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/signup.css">
+</head>
+
+<body>
+  
+  
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/homepage"><img src="/logo.png" class="rounded mx-auto d-block" alt="..."></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/homepage">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/user_search">Search Users</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Trunk Report
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/trunkreport">Trunk Form</a></li>
+              <li><a class="dropdown-item" href="/showtable">Trunk Table</a></li>
+              <li><a class="dropdown-item" href="/update_trunktable">Update Trunk Table</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              PON LOSS
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/ponloss_report">PonLoss Form</a></li>
+              <li><a class="dropdown-item" href="/ponloss_table">PonLoss Table</a></li>
+              <li><a class="dropdown-item" href="/update_ponlosstable">Update PonLoss Table</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/import">Import</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Users
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#"> <%= user.username %> </a></li>
+              <li><a class="dropdown-item" href="/signup">SignUp</a></li>
+              <li><a class="dropdown-item" href="/logout">LogOut</a></li>
+            </ul>
+          </li>        
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <% if (message) { %>
+    <div class="alert-box">
+     <div  class="alert alert-success" role="alert">
+      <%= message %>
+    </div>
+    </div>
+  <% } %>
+
+    <div id="signup-form" class="cg-form px-4 py-3 mx-auto mt-5">
+      <form action="/signup/submitted" method="POST">
+        <div class="col-md-4">
+          <label for="firstname" class="form-label">Firstname</label>
+          <input type="text" name="firstname" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="lastname" class="form-label">Lastname</label>
+          <input type="text" name="lastname" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" name="email" class="form-control required>
+        </div>
+        <div class="col-md-4">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" name="password" class="form-control"  required>
+        </div>
+        <div class="col-md-4">
+          <label for="userType" class="form-label">User Type</label>
+          <select name="userType" id="userType" class="form-select">
+            <option value="superadmin">Super Admin</option>
+            <option value="admin">Normal Admin</option>
+            <option value="normal">Normal User</option>
+          </select>
+        </div>
+        <br>
+
+          <button type="submit" value="Sign Up" class="button">Signup</button>
+
+      </form>
+    </div>
+
+
+
+<!-- Add the following scripts at the end of the body tag -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

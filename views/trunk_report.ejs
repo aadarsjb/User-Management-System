@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trunk Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/trunkreport.css">
+</head>
+
+<body>
+
+  
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/homepage"><img src="/logo.png" class="rounded mx-auto d-block" alt="..."></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/homepage">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/user_search">Search Users</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Trunk Report
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/trunkreport">Trunk Form</a></li>
+              <li><a class="dropdown-item" href="/showtable">Trunk Table</a></li>
+              <li><a class="dropdown-item" href="/update_trunktable">Update Trunk Table</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              PON LOSS
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/ponloss_report">PonLoss Form</a></li>
+              <li><a class="dropdown-item" href="/ponloss_table">PonLoss Table</a></li>
+              <li><a class="dropdown-item" href="/update_ponlosstable">Update PonLoss Table</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/import">Import</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Users
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#"> <%= user.username %> </a></li>
+              <li><a class="dropdown-item" href="/signup">SignUp</a></li>
+              <li><a class="dropdown-item" href="/logout">LogOut</a></li>
+            </ul>
+          </li>        
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <% if (message) { %>
+    <div class="alert-box">
+     <div  class="alert alert-success" role="alert">
+      <%= message %>
+    </div>
+    </div>
+  <% } %>
+
+  
+  <div class="cg-form px-4 py-3 mx-auto mt-2">
+
+    <form id="inputForm" method="POST" action="/trunkreport/trunkreport-submitted">
+      
+      <div class="row pb-4 g-3 align-center">
+
+        <div class="col-md-4">
+          <label for="Ticket_No" class="form-label">Case Ticket No</label>
+          <input type="text" id="Ticket_No" name="Ticket_No" class="form-control" >
+          <div class="invalid-feedback">Case Ticket No.</div>
+        </div>
+        <div class="col-md-4">
+          <label for="Node" class="form-label">Node</label>
+          <select id="Node" name="Node" class="form-select" onchange="updateODNOptions()" >
+            <option value="">Select Node</option>
+            <option value="AccessIV">AccessIV</option>
+            <option value="AGGIV">AGGIV</option>
+            <option value="OLTIV">OLTIV</option>
+            <option value="AccessOV">AccessOV</option>
+            <option value="AGGOV">AGGOV</option>
+            <option value="OLTOV">OLTOV</option>
+          </select>
+          <div class="invalid-feedback">Please select the Node.</div>
+        </div>
+        <div class="col-md-4">
+          <label for="ODN" class="form-label">ODN</label>
+          <select id="ODN" name="ODN" class="form-select" >
+            <option value="">Select ODN</option>
+          </select>
+          <div class="invalid-feedback">Please select the ODN.</div>
+        </div>
+      </div>
+  
+      <div class="row pb-4 g-3" style="display: flex; justify-content: space-between;">
+        <div class="col-md-4">
+          <label for="Case" class="form-label">Incident Details</label>
+          <textarea class="form-control" id="Case" name="Case" 
+          style="height: 50px; width: 300px;"></textarea>
+        </div>
+        <div class="col-md-4">
+          <label for="Trunk" class="form-label">P2P Link</label>
+          <textarea style="height: 50px;  width: 216px;" class="form-control" id="Trunk" name="Trunk" oninput="autoResize(this)"></textarea>
+        </div>
+       
+        
+      </div>
+  
+      <div class="row pb-4 g-3">
+        <div class="col-md-4">
+          <label for="Node_Impacted" class="form-label">Node impacted</label>
+          <input type="text" id="Node_Impacted" name="Node_Impacted" class="form-control" >
+          <div class="invalid-feedback">Node impacted.</div>
+        </div>
+        <div class="col-md-4">
+          <label for="Occured_in_System" class="form-label">Issue Occurred in System</label>
+          <input type="datetime-local" id="Occured_in_System" name="Occured_in_System" class="form-control" >
+          <div class="invalid-feedback">Issue Occurred in System.</div>
+        </div>
+        <div class="col-md-4">
+          <label for="Escalated_Day_Time" class="form-label">Issue Escalated to MS</label>
+          <input type="datetime-local" id="Escalated_Day_Time" name="Escalated_Day_Time" class="form-control" >
+          <div class="invalid-feedback">Issue Escalated to MS.</div>
+        </div>
+      </div>
+  
+      <div class="row pb-4 g-3">
+        <div class="col-md-4" >
+          <label for="Escalated_Team" class="form-label">Escalated Team</label>
+          <select id="Escalated_Team" name="Escalated_Team" class="form-select" >
+            <option value="">Escalated Team</option>
+            <option>Otech</option>
+            <option>ICTC</option>
+            <option>WellWays</option>
+            <option>Get-Engineering</option>
+          </select>
+          <div class="invalid-feedback">Escalated Team.</div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="Team_Response_Day_Time" class="form-label">Otech Confirmation Time</label>
+          <input type="datetime-local" id="Team_Response_Day_Time" name="Team_Response_Day_Time" class="form-control" >
+          <div class="invalid-feedback">Time of Restoration.</div>
+        </div>
+      </div>
+  
+      <div class="row pb-4 g-3">
+        <div class="col-md-6">
+          <label for="RX_Power" class="form-label">RX Power</label>
+          <input type="text" id="RX_Power" name="RX_Power" class="form-control" >
+          <div class="invalid-feedback">RX Power.</div>
+        </div>
+        <div class="col-md-6">
+          <label for="Reason" class="form-label">Reason for Outage (Otech)</label>
+          <input type="text" id="Reason" name="Reason" class="form-control" >
+          <div class="invalid-feedback">Reason for Outage.</div>
+        </div>
+      </div>
+
+      <button type="submit" class="button">Submit</button>
+    </form>
+  </div>
+
+  
+<script src="/trunkreport.js"></script>
+
+<!-- Add the following scripts at the end of the body tag -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

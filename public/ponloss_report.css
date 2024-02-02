@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+
+*{
+    padding: 0%;
+    margin: 0%;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dropdown-item {
+    color: #d10069e5;
+}
+
+.alert-box {
+    margin-top: 4px;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+
+.alert { 
+    margin-top: 12px;
+    background-color: #93f264e2;
+    color: rgb(0, 0, 0);
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(116, 107, 107, 0.551);
+    font-size: 12px;
+  }
+
+
+.cg-form input {
+    height:28px;
+    width: 200px;
+    color: #d10069e5;
+}
+
+.form-label {
+
+    font-size: 14px;
+    color: #493964;
+}
+
+.form-control {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #d10069e5;
+    box-shadow: 0 0 3px #d10069e5;
+    
+}
+
+
+
+.cg-form {
+    max-width: 800px;
+    border: 2px solid #111;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    font-size: 16px;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
+
+.cg-form::after {
+    background-color: #111;
+    border-radius: 18px;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    top: -2px;
+    transform: translate(20px, 20px);
+    z-index: -1;
+}
+
+.row {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
+#inputForm {
+    width: 700px;
+}
+
+
+.button {
+    display: inline-block;
+    background: #d10069e5;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0px 17px 10px -10px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 300ms;
+    transition: all ease-in-out 300ms;
+  }
+  .button:hover {
+    box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);
+    -webkit-transform: translate(0px, -10px) scale(1.2);
+      transform: translate(0px, -10px) scale(1.2);
+  }

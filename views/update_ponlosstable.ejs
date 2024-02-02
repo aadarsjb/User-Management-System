@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ponloss Table Update</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/update_ponlosstable.css">
+</head>
+
+<body>
+  
+  
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/homepage"><img src="/logo.png" class="rounded mx-auto d-block" alt="..."></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/homepage">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/user_search">Search Users</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Trunk Report
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/trunkreport">Trunk Form</a></li>
+              <li><a class="dropdown-item" href="/showtable">Trunk Table</a></li>
+              <li><a class="dropdown-item" href="/update_trunktable">Update Trunk Table</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              PON LOSS
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/ponloss_report">PonLoss Form</a></li>
+              <li><a class="dropdown-item" href="/ponloss_table">PonLoss Table</a></li>
+              <li><a class="dropdown-item" href="/update_ponlosstable">Update PonLoss Table</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/import">Import</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Users
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#"> <%= user.username %> </a></li>
+              <li><a class="dropdown-item" href="/signup">SignUp</a></li>
+              <li><a class="dropdown-item" href="/logout">LogOut</a></li>
+            </ul>
+          </li>        
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+<!--  <div id="title">
+    <h1>Update Ponloss Table</h1>
+  </div>-->
+
+  <% if (message) { %>
+    <div class="alert-box">
+     <div  class="alert alert-success" role="alert">
+      <%= message %>
+    </div>
+    </div>
+  <% } %>
+
+  <div class="cg-update-form px-4 py-3 mx-auto mt-5">
+    <form id="updateForm" method="POST" action="/update_ponlosstable/updated">
+      
+      <div class="row pb-4 g-3">
+        <label for="ticketno">Ticket No</label>
+        <input class="form-control" type="text" id="ticketno" name="ticketno">
+      </div>
+
+    
+      <div class="row pb-4 g-3">
+        <label for="issue_resolve_in_system">Issue Resolved by otech (Email confirmation)</label>
+        <input class="form-control" type="datetime-local" id="issue_resolve_in_system" name="issue_resolve_in_system">
+   
+    
+      </div>
+
+      <button class="button" type="submit">Update</button>
+
+    </form>
+  </div>
+
+
+<!-- Add the following scripts at the end of the body tag -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
